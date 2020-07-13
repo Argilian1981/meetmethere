@@ -1,12 +1,9 @@
 package com.myproject.meetmethere.model;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.Objects;
+import java.util.Set;
 
 @Entity
 public class Socialite {
@@ -19,16 +16,17 @@ public class Socialite {
 	private String contact;
 	private String password;
 	private String status;
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JsonIgnore
-	private SocialGroup socialGroup;
+	@ManyToMany
+	@JoinTable(name = "socialite_social_group" , joinColumns = @JoinColumn(name = "socialite_id") ,
+	inverseJoinColumns = @JoinColumn(name = "social_group_id"))
+	private Set<SocialGroup> socialGroups;
 	
 	protected Socialite() {
 		
 	}
 
 	public Socialite(Integer id, String name, String nick, String email, String contact, String password, String status,
-			SocialGroup socialGroup) {
+			Set<SocialGroup> socialGroups) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -37,7 +35,7 @@ public class Socialite {
 		this.contact = contact;
 		this.password = password;
 		this.status = status;
-		this.socialGroup = socialGroup;
+		this.socialGroups = socialGroups;
 	}
 
 	public Integer getId() {
@@ -96,80 +94,31 @@ public class Socialite {
 		this.status = status;
 	}
 
-	public SocialGroup getSocialGroup() {
-		return socialGroup;
+	public Set<SocialGroup> getSocialGroups() {
+		return socialGroups;
 	}
 
-	public void setSocialGroup(SocialGroup socialGroup) {
-		this.socialGroup = socialGroup;
+	public void setSocialGroups(Set<SocialGroup> socialGroups) {
+		this.socialGroups = socialGroups;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Socialite socialite = (Socialite) o;
+		return id.equals(socialite.id) &&
+				Objects.equals(name, socialite.name) &&
+				Objects.equals(nick, socialite.nick) &&
+				Objects.equals(email, socialite.email) &&
+				Objects.equals(contact, socialite.contact) &&
+				Objects.equals(password, socialite.password) &&
+				Objects.equals(status, socialite.status) &&
+				Objects.equals(socialGroups, socialite.socialGroups);
 	}
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((contact == null) ? 0 : contact.hashCode());
-		result = prime * result + ((email == null) ? 0 : email.hashCode());
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + ((nick == null) ? 0 : nick.hashCode());
-		result = prime * result + ((password == null) ? 0 : password.hashCode());
-		result = prime * result + ((socialGroup == null) ? 0 : socialGroup.hashCode());
-		result = prime * result + ((status == null) ? 0 : status.hashCode());
-		return result;
+		return Objects.hash(id, name, nick, email, contact, password, status, socialGroups);
 	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Socialite other = (Socialite) obj;
-		if (contact == null) {
-			if (other.contact != null)
-				return false;
-		} else if (!contact.equals(other.contact))
-			return false;
-		if (email == null) {
-			if (other.email != null)
-				return false;
-		} else if (!email.equals(other.email))
-			return false;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
-			return false;
-		if (nick == null) {
-			if (other.nick != null)
-				return false;
-		} else if (!nick.equals(other.nick))
-			return false;
-		if (password == null) {
-			if (other.password != null)
-				return false;
-		} else if (!password.equals(other.password))
-			return false;
-		if (socialGroup == null) {
-			if (other.socialGroup != null)
-				return false;
-		} else if (!socialGroup.equals(other.socialGroup))
-			return false;
-		if (status == null) {
-			if (other.status != null)
-				return false;
-		} else if (!status.equals(other.status))
-			return false;
-		return true;
-	}
-
-	
 }

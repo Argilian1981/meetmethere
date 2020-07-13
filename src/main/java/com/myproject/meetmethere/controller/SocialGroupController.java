@@ -56,4 +56,9 @@ public class SocialGroupController {
         return ResponseEntity.created(location).build();
     }
 
+    @DeleteMapping(path = "/socialgroups/{id}")
+    public void deleteSocialGroupById(@PathVariable int id) {
+        socialGroupService.deleteSocialGroupById(id);
+    }
+
 }

@@ -1,11 +1,10 @@
 package com.myproject.meetmethere.model;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
 @Entity
 public class SocialGroup {
@@ -14,8 +13,8 @@ public class SocialGroup {
 	@GeneratedValue
 	private Integer id;
 	private String group_name;
-	@OneToMany(mappedBy = "socialGroup")
-	private List<Socialite> socialiteList;
+	@ManyToMany(mappedBy = "socialGroups")
+	private Set<Socialite> socialites;
 	
 	
 	protected SocialGroup() {
@@ -23,11 +22,11 @@ public class SocialGroup {
 	}
 
 
-	public SocialGroup(Integer id, String group_name, List<Socialite> socialiteList) {
+	public SocialGroup(Integer id, String group_name, Set<Socialite> socialites) {
 		super();
 		this.id = id;
 		this.group_name = group_name;
-		this.socialiteList = socialiteList;
+		this.socialites = socialites;
 	}
 
 
@@ -35,71 +34,39 @@ public class SocialGroup {
 		return id;
 	}
 
-
 	public void setId(Integer id) {
 		this.id = id;
 	}
-
 
 	public String getGroup_name() {
 		return group_name;
 	}
 
-
 	public void setGroup_name(String group_name) {
 		this.group_name = group_name;
 	}
 
+	public Set<Socialite> getSocialites() {
+		return socialites;
+	}
 
-	public List<Socialite> getSocialiteList() {
-		return socialiteList;
+	public void setSocialites(Set<Socialite> socialites) {
+		this.socialites = socialites;
 	}
 
 
-	public void setSocialiteList(List<Socialite> socialiteList) {
-		this.socialiteList = socialiteList;
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (!(o instanceof SocialGroup)) return false;
+		SocialGroup that = (SocialGroup) o;
+		return id.equals(that.id) &&
+				Objects.equals(group_name, that.group_name) &&
+				Objects.equals(socialites, that.socialites);
 	}
-
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((group_name == null) ? 0 : group_name.hashCode());
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((socialiteList == null) ? 0 : socialiteList.hashCode());
-		return result;
+		return Objects.hash(id, group_name, socialites);
 	}
-
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		SocialGroup other = (SocialGroup) obj;
-		if (group_name == null) {
-			if (other.group_name != null)
-				return false;
-		} else if (!group_name.equals(other.group_name))
-			return false;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		if (socialiteList == null) {
-			if (other.socialiteList != null)
-				return false;
-		} else if (!socialiteList.equals(other.socialiteList))
-			return false;
-		return true;
-	}
-
-
-	
-
 }

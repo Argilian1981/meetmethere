@@ -26,7 +26,7 @@ public class SocialGroupService {
         return socialGroup.get();
     }
 
-    public void deleteSocialGroup(int id){
+    public void deleteSocialGroupById(int id){
         socialGroupRepository.deleteById(id);
     }
 
