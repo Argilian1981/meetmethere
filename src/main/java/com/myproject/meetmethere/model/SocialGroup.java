@@ -1,8 +1,9 @@
 package com.myproject.meetmethere.model;
 
+
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
+
 
 import javax.persistence.*;
 
@@ -14,7 +15,7 @@ public class SocialGroup {
 	private Integer id;
 	private String group_name;
 	@ManyToMany(mappedBy = "socialGroups")
-	private Set<Socialite> socialites;
+	private List<Socialite> socialites;
 	
 	
 	protected SocialGroup() {
@@ -22,7 +23,7 @@ public class SocialGroup {
 	}
 
 
-	public SocialGroup(Integer id, String group_name, Set<Socialite> socialites) {
+	public SocialGroup(Integer id, String group_name, List<Socialite> socialites) {
 		super();
 		this.id = id;
 		this.group_name = group_name;
@@ -46,11 +47,11 @@ public class SocialGroup {
 		this.group_name = group_name;
 	}
 
-	public Set<Socialite> getSocialites() {
+	public List<Socialite> getSocialites() {
 		return socialites;
 	}
 
-	public void setSocialites(Set<Socialite> socialites) {
+	public void setSocialites(List<Socialite> socialites) {
 		this.socialites = socialites;
 	}
 

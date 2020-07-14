@@ -2,8 +2,9 @@ package com.myproject.meetmethere.model;
 
 import javax.persistence.*;
 
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
+
 
 @Entity
 public class Socialite {
@@ -16,17 +17,19 @@ public class Socialite {
 	private String contact;
 	private String password;
 	private String status;
-	@ManyToMany
-	@JoinTable(name = "socialite_social_group" , joinColumns = @JoinColumn(name = "socialite_id") ,
-	inverseJoinColumns = @JoinColumn(name = "social_group_id"))
-	private Set<SocialGroup> socialGroups;
+	@ManyToMany(cascade = {CascadeType.PERSIST , CascadeType.MERGE})
+	@JoinTable(name = "socialite_social_group",
+			joinColumns = @JoinColumn(name = "socialite_id", referencedColumnName = "id"),
+			inverseJoinColumns = @JoinColumn(name = "social_group_id",
+					referencedColumnName = "id"))
+	private List<SocialGroup> socialGroups;
 	
 	protected Socialite() {
 		
 	}
 
 	public Socialite(Integer id, String name, String nick, String email, String contact, String password, String status,
-			Set<SocialGroup> socialGroups) {
+			List<SocialGroup> socialGroups) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -94,11 +97,11 @@ public class Socialite {
 		this.status = status;
 	}
 
-	public Set<SocialGroup> getSocialGroups() {
+	public List<SocialGroup> getSocialGroups() {
 		return socialGroups;
 	}
 
-	public void setSocialGroups(Set<SocialGroup> socialGroups) {
+	public void setSocialGroups(List<SocialGroup> socialGroups) {
 		this.socialGroups = socialGroups;
 	}
 
