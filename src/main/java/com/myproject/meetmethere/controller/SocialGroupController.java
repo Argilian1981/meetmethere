@@ -17,7 +17,7 @@ public class SocialGroupController {
     private SocialGroupService socialGroupService;
 
     @PostMapping(path = "/socialgroups")
-    public ResponseEntity<Object> createSocialGroup(@RequestBody SocialGroup socialGroup){
+    public ResponseEntity<Object> saveSocialGroup(@RequestBody SocialGroup socialGroup){
         SocialGroup savedSocialGroup = socialGroupService.saveSocialGroup(socialGroup);
 
         URI location = ServletUriComponentsBuilder
@@ -42,18 +42,6 @@ public class SocialGroupController {
         }
 
         return socialGroup;
-    }
-
-    @PostMapping(path = "/socialgroups/update")
-    public ResponseEntity<Object> updateSocialGroup(@RequestBody SocialGroup socialGroup){
-        SocialGroup savedSocialGroup = socialGroupService.saveSocialGroup(socialGroup);
-
-        URI location = ServletUriComponentsBuilder
-                .fromCurrentRequest().path("/{id}")
-                .buildAndExpand(savedSocialGroup.getId())
-                .toUri();
-
-        return ResponseEntity.created(location).build();
     }
 
     @DeleteMapping(path = "/socialgroups/{id}")

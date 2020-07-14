@@ -19,7 +19,7 @@ public class MeetingController {
 	private SocialiteService socialiteService;
 	
 	@PostMapping(path = "/socialites")
-	public ResponseEntity<Object> createSocialite(@RequestBody Socialite socialite){
+	public ResponseEntity<Object> saveSocialite(@RequestBody Socialite socialite){
 		Socialite savedSocialite = socialiteService.saveSocialite(socialite);
 		
 		URI location = ServletUriComponentsBuilder
@@ -49,18 +49,6 @@ public class MeetingController {
 		}
 
 		return socialite;
-	}
-
-	@PostMapping(path = "/socialites/update")
-	public ResponseEntity<Object> updateSocialite(@RequestBody Socialite socialite){
-		Socialite savedSocialite = socialiteService.saveSocialite(socialite);
-
-		URI location = ServletUriComponentsBuilder
-				.fromCurrentRequest().path("/{id}")
-				.buildAndExpand(savedSocialite.getId())
-				.toUri();
-
-		return ResponseEntity.created(location).build();
 	}
 
 }

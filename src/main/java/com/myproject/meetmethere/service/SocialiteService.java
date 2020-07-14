@@ -33,8 +33,4 @@ public class SocialiteService {
 		return searchedSocialite.get();
 	}
 
-	public Socialite update(Socialite socialite){
-		return socialiteRepository.save(socialite);
-	}
-
 }
