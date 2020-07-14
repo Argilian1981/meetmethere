@@ -28,7 +28,7 @@ public class SocialGroupController {
         return ResponseEntity.created(location).build();
     }
 
-    @GetMapping(path = "/socialgroups/")
+    @GetMapping(path = "/socialgroups")
     public List<SocialGroup> findAllSocialGroups(){
         return socialGroupService.findAllSocialGroups();
     }

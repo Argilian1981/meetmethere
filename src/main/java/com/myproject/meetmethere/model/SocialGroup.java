@@ -14,8 +14,6 @@ public class SocialGroup {
 	@GeneratedValue
 	private Integer id;
 	private String group_name;
-	@ManyToMany(mappedBy = "socialGroups")
-	private List<Socialite> socialites;
 	
 	
 	protected SocialGroup() {
@@ -23,13 +21,11 @@ public class SocialGroup {
 	}
 
 
-	public SocialGroup(Integer id, String group_name, List<Socialite> socialites) {
+	public SocialGroup(Integer id, String group_name) {
 		super();
 		this.id = id;
 		this.group_name = group_name;
-		this.socialites = socialites;
 	}
-
 
 	public Integer getId() {
 		return id;
@@ -47,27 +43,17 @@ public class SocialGroup {
 		this.group_name = group_name;
 	}
 
-	public List<Socialite> getSocialites() {
-		return socialites;
-	}
-
-	public void setSocialites(List<Socialite> socialites) {
-		this.socialites = socialites;
-	}
-
-
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (!(o instanceof SocialGroup)) return false;
 		SocialGroup that = (SocialGroup) o;
 		return id.equals(that.id) &&
-				Objects.equals(group_name, that.group_name) &&
-				Objects.equals(socialites, that.socialites);
+				Objects.equals(group_name, that.group_name);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, group_name, socialites);
+		return Objects.hash(id, group_name);
 	}
 }

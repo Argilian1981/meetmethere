@@ -19,9 +19,8 @@ public class Socialite {
 	private String status;
 	@ManyToMany(cascade = {CascadeType.PERSIST , CascadeType.MERGE})
 	@JoinTable(name = "socialite_social_group",
-			joinColumns = @JoinColumn(name = "socialite_id", referencedColumnName = "id"),
-			inverseJoinColumns = @JoinColumn(name = "social_group_id",
-					referencedColumnName = "id"))
+			joinColumns = @JoinColumn(name = "socialite_id"),
+			inverseJoinColumns = @JoinColumn(name = "social_group_id"))
 	private List<SocialGroup> socialGroups;
 	
 	protected Socialite() {
